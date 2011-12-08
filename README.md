@@ -1,0 +1,1 @@
+Searcher performance comparison suite between Solr, ElasticSearch and Sensei

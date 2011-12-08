@@ -1,0 +1,26 @@
+<schema name="wvatj" version="1.4">
+
+  <types>
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+  </types>
+
+  <fields>
+    <field name="account_id" type="int" indexed="true" stored="false" required="true" />
+    <field name="contract_id" type="int" indexed="true" stored="false" required="true" />
+    <field name="day" type="int" indexed="true" stored="false" required="true" />
+    <field name="job_id" type="int" indexed="true" stored="false" required="true" />
+    <field name="poster_id" type="int" indexed="true" stored="false" required="true" />
+    <field name="job_country" type="string" indexed="true" stored="false" required="true" />
+    <field name="job_region" type="int" indexed="true" stored="false" required="false" />
+    <field name="job_function" type="string" indexed="true" stored="false" multiValued="true" required="false" />
+    <field name="viewer_id" type="int" indexed="true" stored="false" required="false" />
+    <field name="viewer_company" type="int" indexed="true" stored="false" required="false" />
+    <field name="viewer_country" type="string" indexed="true" stored="false" required="false" />
+    <field name="viewer_region" type="int" indexed="true" stored="false" required="false" />
+    <field name="viewer_title" type="int" indexed="true" stored="false" required="false" />
+    <field name="referrer" type="int" indexed="true" stored="false" required="false" />
+  </fields>
+
+</schema>
+

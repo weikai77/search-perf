@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://javasoze.github.com/sensei/schema/sensei-schema.xsd">
+
+  <!-- valid types:
+    uid - only 1 column can be of type uid
+    int - integer
+    short - short 
+    char - character
+    long - long 
+    float - float
+    double - double
+    string - string (default)
+    date - date, format string must be provided
+    text - searchable
+
+    - valid src-data-store:
+    none - do not store
+    lucene - use store in lucene's index
+  -->
+
+  <table uid="id" src-data-store="none" src-data-field="src_data" compress-src-data="true" delete-field="" skip-field="">
+	<column name="account_id" type="int" />
+	<column name="contract_id" type="int" />
+	<column name="day" type="int" />
+	<column name="job_id" type="int" />
+	<column name="poster_id" type="int" />
+	<column name="job_country" type="string" />
+	<column name="job_region" type="int" />
+	<column name="job_functions" type="string" multi="true" delimiter="," />
+	<column name="viewer_id" type="int" />
+	<column name="viewer_company" type="int" />
+	<column name="viewer_country" type="string" />
+	<column name="viewer_region" type="int" />
+	<column name="viewer_title" type="int" />
+	<column name="referrer" type="int" />
+  </table>
+
+   <!-- 
+     valid types are:
+      simple - corresponds to com.browseengine.bobo.facets.impl.SimpleFacetHandler
+      path - corresponds to com.browseengine.bobo.facets.impl.PathFacetHandler
+      range - corresponds to com.browseengine.bobo.facets.impl.RangeFacetHandler
+      multi - corresponds to com.browseengine.bobo.facets.impl.MultiFacetHandler
+      compact-multi - corresponds to com.browseengine.bobo.facets.impl.CompactMultiFacetHandler
+      custom - custom facet handler, name must be defined in a spring bean in custom-facets.xml
+   -->
+   <facets>
+	 <facet name="account_id" type="simple" />
+	 <facet name="contract_id" type="simple" />
+	 <facet name="day" column="day" type="simple" />
+	 <facet name="job_id" type="simple" />
+	 <facet name="poster_id" type="simple" />
+	 <facet name="job_region" type="simple" />
+	 <facet name="job_functions" type="multi" />
+	 <facet name="viewer_company" type="simple" />
+	 <facet name="viewer_region" type="simple" />
+	 <facet name="viewer_title" type="simple" /> 
+	 <facet name="referrer" type="simple" />
+   </facets>
+</schema>
