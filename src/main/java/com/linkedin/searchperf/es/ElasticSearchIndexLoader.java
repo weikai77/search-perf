@@ -17,8 +17,9 @@ import org.elasticsearch.client.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import com.linkedin.searchperf.common.IndexLoader;
 
@@ -81,7 +82,7 @@ public class ElasticSearchIndexLoader implements IndexLoader {
         JSONObject json = null;
         while ((json = _queue.take()) != null)
         {
-          IndexRequestBuilder req = client.prepareIndex("wvatj", "views");
+          IndexRequestBuilder req = client.prepareIndex("perf", "views");
           XContentBuilder xcb = jsonBuilder().startObject();
   
           for (Entry<String,Object> entry : (Set<Entry<String,Object>>) json.entrySet())

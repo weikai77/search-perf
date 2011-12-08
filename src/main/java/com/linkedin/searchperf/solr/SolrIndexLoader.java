@@ -12,7 +12,8 @@ import java.util.Set;
 
 import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.apache.solr.common.SolrInputDocument;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import com.linkedin.searchperf.common.IndexLoader;
 
