@@ -12,7 +12,7 @@ public class SenseiSearcher implements Searcher {
   private SenseiServiceProxy _proxy;
   public SenseiSearcher(String host,int port){
     _url = "http://"+host+":"+port+"/sensei";
-    _proxy = new SenseiServiceProxy();
+    _proxy = new SenseiServiceProxy(_url);
   }
   
   private static SenseiClientRequest buildReq(JSONObject req){
@@ -21,7 +21,7 @@ public class SenseiSearcher implements Searcher {
   
   @Override
   public void doSearch(JSONObject req) throws Exception {
-    _proxy.sendRequest(_url, buildReq(req));
+    _proxy.sendRequest(buildReq(req));
   }
 
   @Override
