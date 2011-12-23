@@ -59,7 +59,7 @@ public class QueryProducerTest extends Assert {
   }
   @Test
   public void test3QueryGenerationFacets() throws Exception {
-      SenseiClientRequest query = queryProducer.createQuery(true, 3, 3, 2);
-      assertEquals(8, query.getFacets().size());
+      SenseiClientRequest query = queryProducer.createQuery(true, 3, 1, 1);
+      assertEquals(5, query.getFacets().size());
   }
 }

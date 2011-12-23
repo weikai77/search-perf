@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://javasoze.github.com/sensei/schema/sensei-schema.xsd">
+  <table uid="id" >
+	<column name="title" type="string" multi="true" delimiter=","/>
+	<column name="age" type="string" multi="true" delimiter=","/>
+	<column name="reg" type="string" multi="true" delimiter=","/>
+	<column name="csize" type="string" multi="true" delimiter=","/>
+	<column name="func" type="string" multi="true" delimiter=","/>
+	<column name="ind" type="string" multi="true" delimiter=","/>
+  </table>
+  
+   <facets>	 
+	 <facet name="title" type="multi" />
+	 <facet name="age" type="multi" />
+	 <facet name="reg" type="multi" />
+	 <facet name="csize" type="multi" />
+	 <facet name="func" type="multi" />
+	 <facet name="ind" type="multi" />	 
+   </facets>
+</schema>
