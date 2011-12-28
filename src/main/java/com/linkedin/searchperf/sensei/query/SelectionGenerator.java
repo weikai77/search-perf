@@ -1,4 +1,4 @@
-package com.linkedin.searchperf.common.query;
+package com.linkedin.searchperf.sensei.query;
 
 import java.util.ArrayList;
 import java.util.Collection;

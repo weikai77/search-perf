@@ -9,6 +9,8 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.linkedin.searchperf.sensei.query.DataCollector;
+
 public class DataCollectorTest {
   private DataCollector dataCollector;
   private BufferedInputStream input;

@@ -16,19 +16,19 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.FileUtils;
 
 import com.linkedin.searchperf.common.concurrent.SenseiRunnerConfig;
-import com.linkedin.searchperf.common.query.QueryProducer;
 import com.linkedin.searchperf.common.util.Assert;
 import com.linkedin.searchperf.sensei.SenseiConcurrentRunner;
+import com.linkedin.searchperf.sensei.query.SenseiQueryProducer;
 import com.sensei.search.client.json.SenseiServiceProxy;
 import com.yammer.metrics.reporting.ConsoleReporter;
 
-public class PerformanceLauncher {
+public class SenseiPerformanceLauncher {
   private static final String RESULT_FILE = "performanceResult.txt";
   public static void main(String[] args) throws Exception {
     PropertiesConfiguration config = extractPropertyConfig(args);
     List<Integer> threads = extractNumberOfThreads(config);
     SenseiRunnerConfig senseiRunnerConfig = SenseiRunnerConfig.build(config);
-    QueryProducer queryProducer = new QueryProducer();
+    SenseiQueryProducer queryProducer = new SenseiQueryProducer();
     queryProducer.init(SenseiRunnerConfig.getResource(senseiRunnerConfig.getSchemaPath()),
         SenseiRunnerConfig.getResource(senseiRunnerConfig.getDataFilePath()));
     SenseiServiceProxy senseiServiceProxy = new SenseiServiceProxy(senseiRunnerConfig.getSenseiHost(), senseiRunnerConfig.getSenseiPort());
@@ -37,6 +37,7 @@ public class PerformanceLauncher {
     File resultFile = new File(RESULT_FILE);
     FileWriter fileWriter = new FileWriter(resultFile, true);
     fileWriter.append(PerformanceResult.getMetadata() + "\n");
+    System.gc();
     System.out.println(PerformanceResult.getMetadata());
     for (int i : threads) {
       senseiRunnerConfig.setNumThreads(i);
@@ -61,7 +62,7 @@ public class PerformanceLauncher {
   }
 
 
-  private static PerformanceResult run(SenseiRunnerConfig senseiRunnerConfig, QueryProducer queryProducer,
+  private static PerformanceResult run(SenseiRunnerConfig senseiRunnerConfig, SenseiQueryProducer queryProducer,
       SenseiServiceProxy senseiServiceProxy, SenseiConcurrentRunner senseiConcurrentRunner)
       throws UnsupportedEncodingException {
     senseiConcurrentRunner.init(senseiRunnerConfig, senseiServiceProxy, queryProducer);

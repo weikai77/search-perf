@@ -1,5 +1,7 @@
 package com.linkedin.searchperf.common.concurrent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -14,13 +16,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.yammer.metrics.Metrics;
+import com.yammer.metrics.core.TimerContext;
 import com.yammer.metrics.core.TimerMetric;
 
 public abstract class AbstractConcurrentRunner <T> {
     protected static Log LOG = LogFactory.getLog(AbstractConcurrentRunner.class);
     private static Log QUERY_LOG = LogFactory.getLog("QueryStats");
     public final TimerMetric responseTimeMetric = Metrics.newTimer(getClass(), "responseTimeMtric", TimeUnit.MILLISECONDS, TimeUnit.MILLISECONDS);
-    private BlockingQueue<T> queue;
+    private BlockingQueue<List<T>> queue;
     private CountDownLatch startSignal = new CountDownLatch(1);
     private ExecutorService executors;
     private volatile  AtomicBoolean stop = new AtomicBoolean(false);
@@ -33,7 +36,7 @@ public abstract class AbstractConcurrentRunner <T> {
       this.testingTime = testingTime;
       executors = Executors.newFixedThreadPool(numThreads);
       int capacity = numThreads * 5;
-      queue = new ArrayBlockingQueue<T>(capacity);
+      queue = new ArrayBlockingQueue<List<T>>(capacity);
     }
 
     public  void run() {
@@ -45,7 +48,8 @@ public abstract class AbstractConcurrentRunner <T> {
         executors.execute(new SearchJob());
       }
       for (int i = 0; i < numThreads * 5 - 1; i++) {
-        queue.offer(createRequest());
+
+        queue.offer(createRequestBatch(100));
       }
       timer.schedule(new TimerTask() {
         @Override
@@ -53,12 +57,13 @@ public abstract class AbstractConcurrentRunner <T> {
           stop.set(true);
         }
       }, testingTime);
-      long now = System.currentTimeMillis();
+
       startSignal.countDown();
       while (!stop.get()) {
         //LOG.error("QueueSize = " + queue.size());
         try {
-          queue.offer(createRequest(), 500, TimeUnit.MILLISECONDS);
+
+          queue.offer(createRequestBatch(100), 500, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
           throw new RuntimeException(e);
         }
@@ -67,14 +72,19 @@ public abstract class AbstractConcurrentRunner <T> {
     }
 
     private void warmUp() {
-
-        sendRequest(createRequest(), QUERY_LOG, responseTimeMetric, stop);
-
-
+      for (int i = 0; i < 100; i++) {
+        sendRequest(createRequest(), QUERY_LOG);
+      }
     }
-
+    private List<T> createRequestBatch(int numOfRequests) {
+      List<T> ret = new ArrayList<T>(numOfRequests);
+      for (int i = 0 ; i < numOfRequests; i++) {
+        ret.add(createRequest());
+      }
+      return ret;
+    }
     protected abstract T createRequest();
-    protected abstract void sendRequest(T request, Log QueryLog, TimerMetric responseTimeMetric, AtomicBoolean stop);
+    protected abstract void sendRequest(T request, Log QueryLog);
     private class SearchJob implements Runnable {
 
       @Override
@@ -82,8 +92,18 @@ public abstract class AbstractConcurrentRunner <T> {
         try {
           startSignal.await();
           while(!stop.get()) {
-            T request = createRequest();
-            sendRequest(request, QUERY_LOG, responseTimeMetric, stop);
+
+            List<T> requests = queue.poll(100, TimeUnit.MILLISECONDS);
+            for (T request : requests) {
+              if (stop.get()) {
+                break;
+              }
+              TimerContext time = responseTimeMetric.time();
+              sendRequest(request, QUERY_LOG);
+              time.stop();
+
+            }
+
           }
         } catch (Exception ex) {
           LOG.error(ex.getMessage(), ex);

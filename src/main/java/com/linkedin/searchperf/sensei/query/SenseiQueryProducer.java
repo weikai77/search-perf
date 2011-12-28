@@ -1,4 +1,4 @@
-package com.linkedin.searchperf.common.query;
+package com.linkedin.searchperf.sensei.query;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -14,14 +14,14 @@ import com.sensei.search.client.json.req.Selection;
 import com.sensei.search.client.json.req.SenseiClientRequest;
 import com.sensei.search.client.json.req.SenseiClientRequest.Builder;
 
-public class QueryProducer {
+public class SenseiQueryProducer {
   private DataCollector collector;
   private SchemaParser parser;
   private SchemaMetadata queryMetadata;
   private Map<String, Set<Object>> fieldValues;
   private SelectionGenerator selectionGenerator;
 
-  public QueryProducer() {
+  public SenseiQueryProducer() {
 
   }
 
@@ -137,8 +137,8 @@ public class QueryProducer {
   }
 
   @Override
-  public QueryProducer clone() {
-    QueryProducer ret = new QueryProducer();
+  public SenseiQueryProducer clone() {
+    SenseiQueryProducer ret = new SenseiQueryProducer();
     ret.collector = collector;
     ret.fieldValues = fieldValues;
     ret.queryMetadata = queryMetadata;

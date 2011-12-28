@@ -7,6 +7,9 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.linkedin.searchperf.sensei.query.SchemaMetadata;
+import com.linkedin.searchperf.sensei.query.SchemaParser;
+
 public class SchemaParserTest extends Assert {
   private SchemaParser schemaParser;
   private InputStream schemaContent;

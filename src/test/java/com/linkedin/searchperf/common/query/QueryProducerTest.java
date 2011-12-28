@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.linkedin.searchperf.sensei.query.SenseiQueryProducer;
 import com.sensei.search.client.json.JsonSerializer;
 import com.sensei.search.client.json.req.Selection.Path;
 import com.sensei.search.client.json.req.Selection.Range;
@@ -18,14 +19,14 @@ import com.sensei.search.client.json.req.Terms;
 public class QueryProducerTest extends Assert {
   private static InputStream dataInput;
   private static InputStream schemaContent;
-  private static QueryProducer queryProducer;
+  private static SenseiQueryProducer queryProducer;
 
   @BeforeClass
   public static void before() throws Exception {
 
     dataInput = new BufferedInputStream(QueryProducerTest.class.getClassLoader().getResourceAsStream("cars.json"));
     schemaContent = QueryProducerTest.class.getClassLoader().getResourceAsStream("sensei/schema.xml");
-    queryProducer = new QueryProducer();
+    queryProducer = new SenseiQueryProducer();
     queryProducer.init(schemaContent, dataInput);
   }
   @Test
