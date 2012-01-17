@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.sensei.search.client.json.req.Operator;
-import com.sensei.search.client.json.req.Selection;
-import com.sensei.search.client.json.req.filter.Filters;
+import com.senseidb.search.client.json.req.Operator;
+import com.senseidb.search.client.json.req.Selection;
+import com.senseidb.search.client.json.req.filter.Filters;
 
 public class SelectionGenerator {
   private final Map<String, Set<Object>> fieldValues;

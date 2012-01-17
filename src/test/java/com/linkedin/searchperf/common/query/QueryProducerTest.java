@@ -10,11 +10,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.linkedin.searchperf.sensei.query.SenseiQueryProducer;
-import com.sensei.search.client.json.JsonSerializer;
-import com.sensei.search.client.json.req.Selection.Path;
-import com.sensei.search.client.json.req.Selection.Range;
-import com.sensei.search.client.json.req.SenseiClientRequest;
-import com.sensei.search.client.json.req.Terms;
+import com.senseidb.search.client.json.JsonSerializer;
+import com.senseidb.search.client.json.req.Selection.Path;
+import com.senseidb.search.client.json.req.Selection.Range;
+import com.senseidb.search.client.json.req.SenseiClientRequest;
+import com.senseidb.search.client.json.req.Terms;
 
 public class QueryProducerTest extends Assert {
   private static InputStream dataInput;
