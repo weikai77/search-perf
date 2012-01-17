@@ -87,11 +87,15 @@ public class SenseiPerformanceLauncher {
       if (str == null || str.contains("==") || !str.contains("=")) {
         continue;
       }
-
+      //System.out.println(str);
       map.put(str.split("=")[0].trim(), str.split("=")[1].trim());
     }
     double qps = ((double)Integer.valueOf(map.get("count"))) * 1000 / senseiRunnerConfig.getTestingTime();
-    PerformanceResult ret = new PerformanceResult(senseiRunnerConfig.getNumThreads(), map.get("min"), map.get("mean").replace("ms", "").trim(), String.valueOf(qps));
+    String min = map.get("min");
+    String mean = map.get("mean").trim();
+    String median = map.get("median").trim();
+    String s75 = map.get("75% <").trim();
+    PerformanceResult ret = new PerformanceResult(senseiRunnerConfig.getNumThreads(), min, mean, median, s75,String.valueOf(qps));
     return ret;
 
   }
@@ -122,21 +126,25 @@ public class SenseiPerformanceLauncher {
     int numberOfThreads;
     String min;
     String mean;
-    String max;
+   
     String qps;
-    public PerformanceResult(int numberOfThreads, String min, String mean, String qps) {
+    String median;
+    String valueFor75;
+    public PerformanceResult(int numberOfThreads, String min, String mean,String median, String valueFor75, String qps) {
       super();
       this.numberOfThreads = numberOfThreads;
       this.min = min;
       this.mean = mean;
+      this.median = median;
+      this.valueFor75 = valueFor75;
       this.qps = qps;
     }
     @Override
     public String toString() {
-      return "" + numberOfThreads + "\t"+  mean + "\t " + qps + "";
+      return "   " + numberOfThreads + "         "+  min + "  "+  median + "    "+  mean + "     "+  valueFor75 + "     " + qps + "";
     }
     public static String getMetadata() {
-      return "#Threads\tmean\tqps";
+      return "#Threads     min     median     mean         75%         qps";
     }
   }
 }

@@ -15,9 +15,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import com.linkedin.searchperf.common.IndexLoader;
-
-public class SolrIndexLoader implements IndexLoader {
+public class SolrIndexLoader {
 
   private final File _dataFile;
   private final String _solrUrl;
@@ -25,16 +23,16 @@ public class SolrIndexLoader implements IndexLoader {
     _dataFile = dataFile;
     _solrUrl = "http://"+solrHost+":"+solrPort+"/solr/";
   }
-  
-  @Override
+
+
   public void loadData() throws Exception {
     CommonsHttpSolrServer solr = new CommonsHttpSolrServer(_solrUrl);
     Iterator<SolrInputDocument> iter = new Iterator<SolrInputDocument>()
     {
-      private final BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(_dataFile),UTF8));
+      private final BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(_dataFile),"UTF-8"));
       private boolean done;
       private String next;
-      
+
       @Override
       public boolean hasNext()
       {
@@ -66,7 +64,7 @@ public class SolrIndexLoader implements IndexLoader {
       {
         if (!hasNext())
           throw new NoSuchElementException();
-        
+
         SolrInputDocument doc = new SolrInputDocument();
         JSONObject json = (JSONObject) JSONValue.parse(next);
         for (Entry<String,Object> entry : (Set<Entry<String,Object>>) json.entrySet())

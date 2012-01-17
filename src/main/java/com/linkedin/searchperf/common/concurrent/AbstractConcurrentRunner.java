@@ -71,12 +71,12 @@ public abstract class AbstractConcurrentRunner <T> {
       //System.out.println("!!!" + (System.currentTimeMillis() - now));
     }
 
-    private void warmUp() {
+    protected void warmUp() {
       for (int i = 0; i < 100; i++) {
         sendRequest(createRequest(), QUERY_LOG);
       }
     }
-    private List<T> createRequestBatch(int numOfRequests) {
+    protected List<T> createRequestBatch(int numOfRequests) {
       List<T> ret = new ArrayList<T>(numOfRequests);
       for (int i = 0 ; i < numOfRequests; i++) {
         ret.add(createRequest());
@@ -113,5 +113,7 @@ public abstract class AbstractConcurrentRunner <T> {
     public ExecutorService getExecutors() {
       return executors;
     }
-
+    public void stop() {
+      stop.set(true);
+    }
 }

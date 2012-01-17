@@ -1,5 +1,7 @@
 package com.linkedin.searchperf.es;
 
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,15 +19,11 @@ import org.elasticsearch.client.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
-import static org.elasticsearch.common.xcontent.XContentFactory.*;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import com.linkedin.searchperf.common.IndexLoader;
-
-public class ElasticSearchIndexLoader implements IndexLoader {
+public class ElasticSearchIndexLoader  {
 
   private final File _dataFile;
   private final String _esHost;
@@ -35,8 +33,8 @@ public class ElasticSearchIndexLoader implements IndexLoader {
     _esHost = esHost;
     _esPort = esPort;
   }
-  
-  @Override
+
+
   public void loadData() throws Exception {
     BlockingQueue<JSONObject> queue = new LinkedBlockingQueue<JSONObject>(2000000);
     List<Worker> workers = new ArrayList<Worker>();
@@ -46,8 +44,8 @@ public class ElasticSearchIndexLoader implements IndexLoader {
       worker.start();
       workers.add(worker);
     }
-    
-    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(_dataFile),UTF8));
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(_dataFile),"UTF-8"));
     try
     {
       String line = null;
@@ -61,7 +59,7 @@ public class ElasticSearchIndexLoader implements IndexLoader {
     {
       br.close();
     }
-    
+
     for (Worker w : workers)
       w.join();
   }
@@ -69,12 +67,12 @@ public class ElasticSearchIndexLoader implements IndexLoader {
   private class Worker extends Thread
   {
     final BlockingQueue<JSONObject> _queue;
-    
+
     public Worker(BlockingQueue<JSONObject> queue)
     {
       this._queue = queue;
     }
-    
+
     @Override
     public void run()
     {
@@ -86,7 +84,7 @@ public class ElasticSearchIndexLoader implements IndexLoader {
         {
           IndexRequestBuilder req = client.prepareIndex("perf", "views");
           XContentBuilder xcb = jsonBuilder().startObject();
-  
+
           for (Entry<String,Object> entry : (Set<Entry<String,Object>>) json.entrySet())
           {
             if (entry.getKey().equals("job_functions"))
@@ -100,7 +98,7 @@ public class ElasticSearchIndexLoader implements IndexLoader {
               xcb.field(entry.getKey(), entry.getValue());
             }
           }
-          
+
           xcb.endObject();
           req.setSource(xcb).execute();
         }
