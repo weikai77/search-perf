@@ -22,7 +22,7 @@ import com.linkedin.searchperf.sensei.query.SenseiQueryProducer;
 import com.senseidb.search.client.json.SenseiServiceProxy;
 import com.yammer.metrics.reporting.ConsoleReporter;
 
-public class SenseiPerformanceLauncher {
+public class PerformanceLauncher {
   private static final String RESULT_FILE = "performanceResult.txt";
   public static void main(String[] args) throws Exception {
     PropertiesConfiguration config = extractPropertyConfig(args);

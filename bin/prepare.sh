@@ -3,15 +3,14 @@
 bin=`dirname "$0"`
 bin=`cd "$bin"; pwd`
 
-rep=100
+numdocs=3000000
 if [ -z "$1" ]
 then
-  echo "no input supplied, defaulting replication factor = 100, e.g. 100*15000 = 1500000 docs"
+  echo "no input supplied, defaulting to 3000000 docs"
 else
-  rep=$1
-  numdocs=$rep*15000
-  echo "replication factor = $1, e.g. $1*15000 = $numdocs"
+  numdocs=$1
+  echo "$numdocs docs"
 fi
 
-for (( c=1; c<=$rep; c++ )); do  cat $bin/../data/cars.json >> $bin/../data/test.json; done
+python $bin/expandData.py $bin/../data/cars.json $bin/../data/test.json $numdocs
 
