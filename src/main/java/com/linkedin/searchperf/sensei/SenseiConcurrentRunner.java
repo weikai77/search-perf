@@ -5,8 +5,8 @@ import org.apache.commons.logging.Log;
 import com.linkedin.searchperf.common.concurrent.AbstractConcurrentRunner;
 import com.linkedin.searchperf.common.concurrent.SenseiRunnerConfig;
 import com.linkedin.searchperf.sensei.query.SenseiQueryProducer;
-import com.sensei.search.client.json.JsonSerializer;
-import com.sensei.search.client.json.SenseiServiceProxy;
+import com.senseidb.search.client.json.JsonSerializer;
+import com.senseidb.search.client.json.SenseiServiceProxy;
 
 public class SenseiConcurrentRunner extends AbstractConcurrentRunner<String> {
   private SenseiServiceProxy senseiServiceProxy;

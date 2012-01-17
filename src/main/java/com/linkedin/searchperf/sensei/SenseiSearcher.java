@@ -3,8 +3,8 @@ package com.linkedin.searchperf.sensei;
 import org.json.JSONObject;
 
 import com.linkedin.searchperf.common.Searcher;
-import com.sensei.search.client.json.SenseiServiceProxy;
-import com.sensei.search.client.json.req.SenseiClientRequest;
+import com.senseidb.search.client.json.SenseiServiceProxy;
+import com.senseidb.search.client.json.req.SenseiClientRequest;
 
 public class SenseiSearcher implements Searcher {
 

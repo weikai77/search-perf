@@ -9,10 +9,10 @@ import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 
-import com.sensei.search.client.json.req.Facet;
-import com.sensei.search.client.json.req.Selection;
-import com.sensei.search.client.json.req.SenseiClientRequest;
-import com.sensei.search.client.json.req.SenseiClientRequest.Builder;
+import com.senseidb.search.client.json.req.Facet;
+import com.senseidb.search.client.json.req.Selection;
+import com.senseidb.search.client.json.req.SenseiClientRequest;
+import com.senseidb.search.client.json.req.SenseiClientRequest.Builder;
 
 public class SenseiQueryProducer {
   private DataCollector collector;

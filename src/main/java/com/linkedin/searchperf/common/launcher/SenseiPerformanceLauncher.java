@@ -19,7 +19,7 @@ import com.linkedin.searchperf.common.concurrent.SenseiRunnerConfig;
 import com.linkedin.searchperf.common.util.Assert;
 import com.linkedin.searchperf.sensei.SenseiConcurrentRunner;
 import com.linkedin.searchperf.sensei.query.SenseiQueryProducer;
-import com.sensei.search.client.json.SenseiServiceProxy;
+import com.senseidb.search.client.json.SenseiServiceProxy;
 import com.yammer.metrics.reporting.ConsoleReporter;
 
 public class SenseiPerformanceLauncher {
