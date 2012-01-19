@@ -77,7 +77,17 @@ public class PerfEval
      * 
      * */
     //done with inserting. Time spent:1469924
-    // Sensei indexing time : sensei indexing time: 449413
+
+    
+    
+    // sensei indexing time: 893413  (sensei.index.manager.default.eventsPerMin  = 214748)
+    // sensei indexing time: 514826  (sensei.index.manager.default.eventsPerMin  = 414748)
+    // sensei indexing time: 467624  (sensei.index.manager.default.eventsPerMin  = 514748)
+    // sensei indexing time: 449413  (sensei.index.manager.default.eventsPerMin  = 600000)    
+    // sensei indexing time: 458155  (sensei.index.manager.default.eventsPerMin  = 2147483)
+    // sensei indexing time: 396886  (sensei.index.manager.default.eventsPerMin  = 21474836)
+    // sensei indexing time: 428613  (sensei.index.manager.default.eventsPerMin  = 214748364)
+    // sensei indexing time: 441659  (sensei.index.manager.default.eventsPerMin  = 2147483647)
     
   
     // MySQL query performance testing:
