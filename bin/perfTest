@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#USAGE
+#
+#
+#
+
+
+bin=`dirname "$0"`
+bin=`cd "$bin"; pwd`
+rm perf-result
+rm report.log
+lib=$bin/../target/dependency
+classes=$bin/../target/classes
+CLASSPATH=$lib/*:$classes/:.
+# HEAP_OPTS="-Xmx4096m -Xms2048m -XX:NewSize=1024m" # -d64 for 64-bit awesomeness
+
+MAIN_CLASS="com.linkedin.searchperf.common.launcher.GenericPerformanceLauncher"
+echo $CLASSPATH
+cd $bin/..
+echo The performanceResult.txt file would be created in the parent dir
+java $JAVA_OPTS $JMX_OPTS $HEAP_OPTS $GC_OPTS $JAVA_DEBUG -classpath $CLASSPATH   $MAIN_CLASS $1
+ 

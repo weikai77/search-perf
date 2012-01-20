@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.linkedin.searchperf.common.util.HttpClient;
+import com.linkedin.searchperf.index.IndexLoaderMain;
+import com.linkedin.searchperf.index.SolrIndexLoader;
 
 public class HttpIndexLoaderTest {
   public static class MockHttpClient extends HttpClient {
@@ -21,19 +24,21 @@ public class HttpIndexLoaderTest {
     }
   }
 
-  private HttpIndexLoader httpIndexLoader;
+  private IndexLoaderMain httpIndexLoader;
   private MockHttpClient mockHttpClient;
   @Before
   public void setUp() throws Exception {
-     httpIndexLoader = new HttpIndexLoader();
+     try {
+     httpIndexLoader = new IndexLoaderMain();
      mockHttpClient = new MockHttpClient();
-     httpIndexLoader.setHttpClient(mockHttpClient);
+     httpIndexLoader.setHttpClient(mockHttpClient);} catch (Exception ex) {ex.printStackTrace();}
   }
 
   @Test
-  public void testLoadData() {
-    httpIndexLoader.loadData("anyUrl", getClass().getClassLoader().getResourceAsStream("cars.json"));
-    assertEquals(150, mockHttpClient.postedData.size());
+  public void testLoadData() throws Exception {
+    try {
+    httpIndexLoader.loadData(new SolrIndexLoader(IOUtils.lineIterator(getClass().getClassLoader().getResourceAsStream("cars.json"), "UTF-8"),"anyUrl", mockHttpClient), 5);
+    assertEquals(150, mockHttpClient.postedData.size());} catch (Exception ex) {ex.printStackTrace();}
   }
 
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.linkedin.searchperf.sensei.query.DataCollector;
+import com.linkedin.searchperf.query.sensei.DataCollector;
 
 public class DataCollectorTest {
   private DataCollector dataCollector;

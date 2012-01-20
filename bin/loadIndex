@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# This script is used to load documents into Elastic search and Solr
+bin=`dirname "$0"`
+bin=`cd "$bin"; pwd`
+lib=$bin/../target/dependency
+classes=$bin/../target/classes
+CLASSPATH=$lib/*:$classes/:.
+# HEAP_OPTS="-Xmx4096m -Xms2048m -XX:NewSize=1024m" # -d64 for 64-bit awesomeness
+
+MAIN_CLASS="com.linkedin.searchperf.index.IndexLoaderMain"
+echo $CLASSPATH
+
+pushd .
+cd $bin/..
+#java $JAVA_OPTS $JMX_OPTS $HEAP_OPTS $GC_OPTS $JAVA_DEBUG -classpath $CLASSPATH   $MAIN_CLASS  elastic http://localhost:9200/cars/car data/cars3m.json 5
+java $JAVA_OPTS $JMX_OPTS $HEAP_OPTS $GC_OPTS $JAVA_DEBUG -classpath $CLASSPATH   $MAIN_CLASS  solr http://localhost:8983/solr/update/json/?commit=true data/cars3m.json 5
+
+popd 

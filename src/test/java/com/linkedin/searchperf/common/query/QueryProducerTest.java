@@ -9,10 +9,10 @@ import org.json.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.linkedin.searchperf.sensei.query.SenseiQueryProducer;
+import com.linkedin.searchperf.query.sensei.SenseiQueryProducer;
 import com.senseidb.search.client.json.JsonSerializer;
+import com.senseidb.search.client.json.req.Range;
 import com.senseidb.search.client.json.req.Selection.Path;
-import com.senseidb.search.client.json.req.Selection.Range;
 import com.senseidb.search.client.json.req.SenseiClientRequest;
 import com.senseidb.search.client.json.req.Terms;
 

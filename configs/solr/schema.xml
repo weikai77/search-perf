@@ -1,26 +1,39 @@
-<schema name="wvatj" version="1.4">
+<schema name="cars" version="1.4">
 
   <types>
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
     <fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+    <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+      <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true" />       
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true" />
+        <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
   </types>
 
   <fields>
-    <field name="account_id" type="int" indexed="true" stored="false" required="true" />
-    <field name="contract_id" type="int" indexed="true" stored="false" required="true" />
-    <field name="day" type="int" indexed="true" stored="false" required="true" />
-    <field name="job_id" type="int" indexed="true" stored="false" required="true" />
-    <field name="poster_id" type="int" indexed="true" stored="false" required="true" />
-    <field name="job_country" type="string" indexed="true" stored="false" required="true" />
-    <field name="job_region" type="int" indexed="true" stored="false" required="false" />
-    <field name="job_function" type="string" indexed="true" stored="false" multiValued="true" required="false" />
-    <field name="viewer_id" type="int" indexed="true" stored="false" required="false" />
-    <field name="viewer_company" type="int" indexed="true" stored="false" required="false" />
-    <field name="viewer_country" type="string" indexed="true" stored="false" required="false" />
-    <field name="viewer_region" type="int" indexed="true" stored="false" required="false" />
-    <field name="viewer_title" type="int" indexed="true" stored="false" required="false" />
-    <field name="referrer" type="int" indexed="true" stored="false" required="false" />
+    <field name="id" type="string" indexed="true" stored="true"/>
+    <field name="groupid" type="long" indexed="true" stored="true"/>
+	<field name="color" type="string" indexed="true" stored="true"/>
+	<field name="category" type="string" indexed="true" stored="true"/>
+	<field name="city" type="string" indexed="true" stored="true"/>
+	<field name="makemodel" type="string" indexed="true" stored="true"/>
+	<field name="year" type="int" indexed="true" stored="true"/>
+	<field name="price" type="float" indexed="true" stored="true"/>
+	<field name="mileage" type="int" indexed="true" stored="true"/>	
+	<field name="tags" type="string" multiValued="true" indexed="true" stored="true"/>	
+	<field name="contents"  type="text_general" indexed="true" stored="true" termVectors="true" termPositions="true" termOffsets="true" />  
   </fields>
-
+<uniqueKey>id</uniqueKey>
+<defaultSearchField>contents</defaultSearchField>
 </schema>
 
